@@ -1,7 +1,5 @@
 const pkg = require('./package');
 
-console.log(process.env.NODE_ENV);
-
 const isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = {
@@ -54,7 +52,9 @@ module.exports = {
   */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
-    baseURL: 'http://localhost:7777',
+    baseURL: isProduction
+      ? 'https://hiking-log-api.glitch.me'
+      : 'http://localhost:7777',
   },
 
   /*
