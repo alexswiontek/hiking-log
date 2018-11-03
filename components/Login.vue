@@ -1,16 +1,13 @@
 <template>
-  <v-card class="elevation-12">
+  <v-card 
+    width="95%"
+    max-width="400px">
     <v-toolbar 
-      dark 
-      color="primary">
-      <v-toolbar-title>Register</v-toolbar-title>
-      <v-spacer/>
+      class="primary" 
+      dark>
+      <v-toolbar-title>Log In</v-toolbar-title>
     </v-toolbar>
     <v-card-text>
-      <v-alert 
-        v-model="alert" 
-        dismissible 
-        type="error">{{ authError }}</v-alert>
       <v-form v-model="valid">
         <v-text-field
           v-model="email"
@@ -21,7 +18,7 @@
           label="Email" 
           type="email"
           required
-          @keyup.enter="login"
+          @keyup.enter="loginUser"
         />
         <v-text-field
           v-model="password"
@@ -32,31 +29,33 @@
           label="Password" 
           type="password"
           required
-          @keyup.enter="registerUser"
+          @keyup.enter="loginUser"
         />
       </v-form>
     </v-card-text>
     <v-card-actions>
-      <nuxt-link to="/forgot-password">Forgot Password?</nuxt-link>
+      <slot/>
       <v-spacer/>
-      <v-btn 
-        color="primary"
-        @click="registerUser">Register</v-btn>
+      <v-btn
+        :loading="isSubmitting"
+        :disabled="isSubmitting || !valid"
+        color="primary" 
+        @click="loginUser">Login</v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions } from 'vuex';
 
 export default {
-  name: 'Register',
+  name: 'Login',
   layout: 'authenticate',
   data: () => ({
-    alert: false,
     valid: false,
     isSubmitting: false,
     error: false,
+    errorMessage: '',
     email: '',
     emailRules: [
       v => !!v || 'E-mail is required',
@@ -65,30 +64,26 @@ export default {
     password: '',
     passwordRules: [v => !!v || 'Password is required'],
   }),
-  computed: {
-    ...mapGetters('auth', ['authError']),
-  },
-  watch: {
-    authError(error) {
-      if (error) this.alert = true;
-    },
-  },
   methods: {
-    ...mapActions('auth', ['register']),
-    async registerUser() {
+    ...mapActions('auth', ['login']),
+    async loginUser() {
       if (this.valid) {
         try {
           // Set submitting to true, try to dispatch login
           this.isSubmitting = true;
 
-          await this.register({
+          await this.login({
             email: this.email,
+            password: this.password,
           });
 
-          this.$router.push('/');
+          this.$router.push('/home');
         } catch (e) {
-          this.isSubmitting = false;
+          this.errorMessage = e.message;
         }
+
+        // Regardless of outcome, set submitting to false
+        this.isSubmitting = false;
       }
     },
   },

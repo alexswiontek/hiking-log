@@ -17,9 +17,6 @@ import Toolbar from '~/components/Toolbar';
 import Footer from '~/components/Footer';
 
 export default {
-  asyncData(context) {
-    console.log(context);
-  },
   name: 'Default',
   middleware: 'auth',
   components: {

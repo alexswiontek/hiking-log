@@ -1,11 +1,10 @@
 <template>
-  <v-card class="elevation-12">
+  <v-card 
+    width="95%"
+    max-width="400px">
     <v-toolbar 
       dark 
       color="primary">
-      <img src="~/assets/mountain.png" >
-      <v-toolbar-title>Hiking Log</v-toolbar-title>
-      <v-spacer/>
       <v-toolbar-title>Forgot Password</v-toolbar-title>
     </v-toolbar>
     <v-card-text>
@@ -40,13 +39,13 @@
       </v-form>
     </v-card-text>
     <v-card-actions>
-      <nuxt-link to="/login">Already have an account?</nuxt-link>
+      <slot/>
       <v-spacer/>
       <v-btn 
         :loading="isSubmitting"
         :disabled="isSubmitting || !valid"
         color="primary" 
-        @click="forgotPassword">Submit</v-btn>
+        @click="forgotPassword">Reset Password</v-btn>
     </v-card-actions>
   </v-card>
 </template>

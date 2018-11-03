@@ -7,7 +7,7 @@
   >
     <img src="~/assets/mountain.png" >
     <v-toolbar-title class="link">
-      <nuxt-link to="/">Hiking Log</nuxt-link>
+      <nuxt-link to="/home">Hiking Log</nuxt-link>
     </v-toolbar-title>
     <v-spacer/>
     <v-toolbar-items>
@@ -44,7 +44,7 @@
               <v-list-tile-title>Edit Profile</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
-          <v-list-tile @click="logout">
+          <v-list-tile @click="logoutUser">
             <v-list-tile-content class="pr-2">
               <v-icon medium>lock_outline</v-icon>
             </v-list-tile-content>
@@ -59,19 +59,22 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   name: 'Toolbar',
   methods: {
+    ...mapActions('auth', ['logout']),
     addHike() {
       this.$router.push('/add-hike');
     },
     viewHikes() {
-      this.$router.push('/');
+      this.$router.push('/home');
     },
-    async logout() {
+    async logoutUser() {
       try {
-        await this.$store.dispatch('logout');
-        this.$router.push('/login');
+        await this.logout();
+        this.$router.push('/');
       } catch (e) {
         console.log(e);
       }

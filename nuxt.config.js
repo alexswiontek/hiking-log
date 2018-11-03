@@ -1,5 +1,9 @@
 const pkg = require('./package');
 
+console.log(process.env.NODE_ENV);
+
+const isProduction = process.env.NODE_ENV === 'production';
+
 module.exports = {
   mode: 'universal',
 
@@ -7,7 +11,7 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: pkg.name,
+    title: 'Hiking Log',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -26,7 +30,7 @@ module.exports = {
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#fff' },
+  loading: { color: '#80CBC4' },
 
   /*
   ** Global CSS
@@ -72,4 +76,6 @@ module.exports = {
       }
     },
   },
+
+  debug: !isProduction,
 };

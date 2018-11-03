@@ -37,7 +37,7 @@ const auth = {
     async register({ commit }, { email, password }) {
       commit(TYPES.SET_USER);
       try {
-        const { data } = await this.$axios.$post('/register', {
+        const data = await this.$axios.$post('/register', {
           email,
           password,
         });
@@ -52,7 +52,7 @@ const auth = {
     async login({ commit }, { email, password }) {
       commit(TYPES.SET_USER);
       try {
-        const { data } = await this.$axios.$post('/login', {
+        const data = await this.$axios.$post('/login', {
           email,
           password,
         });
@@ -65,7 +65,7 @@ const auth = {
       }
     },
     async logout({ commit }) {
-      await axios.post('/logout');
+      await this.$axios.$post('/logout');
       commit(TYPES.SET_USER, null);
     },
   },
