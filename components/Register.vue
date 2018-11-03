@@ -14,10 +14,11 @@
         v-model="alert" 
         dismissible 
         type="error">{{ authError }}</v-alert>
-      <v-form v-model="valid">
+      <v-form>
         <v-text-field
+          v-validate="'required|email'"
           v-model="email"
-          :rules="emailRules" 
+          :error-messages="errors.collect('email')"
           :disabled="isSubmitting"
           prepend-icon="mail" 
           name="email" 
@@ -27,12 +28,25 @@
           @keyup.enter="registerUser"
         />
         <v-text-field
+          v-validate="'required|min:8'"
           v-model="password"
-          :rules="passwordRules" 
+          :error-messages="errors.collect('password')"
           :disabled="isSubmitting"
           prepend-icon="lock" 
           name="password" 
           label="Password" 
+          type="password"
+          required
+          @keyup.enter="registerUser"
+        />
+        <v-text-field
+          v-validate="'required|confirmed:password'"
+          v-model="confirmPassword"
+          :error-messages="errors.collect('confirm password')"
+          :disabled="isSubmitting"
+          prepend-icon="lock" 
+          name="confirm password" 
+          label="Confirm Password" 
           type="password"
           required
           @keyup.enter="registerUser"
@@ -43,7 +57,7 @@
       <v-spacer/>
       <v-btn 
         :loading="isSubmitting"
-        :disabled="isSubmitting || !valid"      
+        :disabled="isSubmitting || !isValid"      
         color="primary"
         @click="registerUser">Sign Up</v-btn>
     </v-card-actions>
@@ -58,19 +72,22 @@ export default {
   layout: 'authenticate',
   data: () => ({
     alert: false,
-    valid: false,
     isSubmitting: false,
     error: false,
+    confirmPassword: '',
     email: '',
-    emailRules: [
-      v => !!v || 'E-mail is required',
-      v => /.+@.+/.test(v) || 'E-mail must be valid',
-    ],
     password: '',
-    passwordRules: [v => !!v || 'Password is required'],
   }),
   computed: {
     ...mapGetters('auth', ['authError']),
+    isValid() {
+      return (
+        !!this.email &&
+        !!this.password &&
+        !!this.confirmPassword &&
+        this.errors.count() === 0
+      );
+    },
   },
   watch: {
     authError(error) {
@@ -80,7 +97,7 @@ export default {
   methods: {
     ...mapActions('auth', ['register']),
     async registerUser() {
-      if (this.valid) {
+      if (this.isValid) {
         try {
           // Set submitting to true, try to dispatch login
           this.isSubmitting = true;
@@ -98,6 +115,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-</style>

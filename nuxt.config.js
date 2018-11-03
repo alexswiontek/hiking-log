@@ -38,7 +38,10 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: ['@/plugins/vuetify'],
+  plugins: [
+    '@/plugins/vuetify',
+    { src: '~plugins/vee-validate.js', ssr: true },
+  ],
 
   /*
   ** Nuxt.js modules

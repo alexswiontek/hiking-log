@@ -6,7 +6,9 @@
     dark
   >
     <img src="~/assets/mountain.png" >
-    <v-toolbar-title class="link">
+    <v-toolbar-title 
+      v-if="!$vuetify.breakpoint.xs" 
+      class="link">
       <nuxt-link to="/home">Hiking Log</nuxt-link>
     </v-toolbar-title>
     <v-spacer/>

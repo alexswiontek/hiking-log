@@ -8,10 +8,15 @@
       <v-toolbar-title>Log In</v-toolbar-title>
     </v-toolbar>
     <v-card-text>
-      <v-form v-model="valid">
+      <v-alert 
+        v-model="alert" 
+        dismissible 
+        type="error">{{ authError }}</v-alert>      
+      <v-form>
         <v-text-field
+          v-validate="'required|email'"
           v-model="email"
-          :rules="emailRules" 
+          :error-messages="errors.collect('email')"
           :disabled="isSubmitting"
           prepend-icon="mail" 
           name="email" 
@@ -21,8 +26,9 @@
           @keyup.enter="loginUser"
         />
         <v-text-field
+          v-validate="'required|min:8'"
           v-model="password"
-          :rules="passwordRules" 
+          :error-messages="errors.collect('password')"
           :disabled="isSubmitting"
           prepend-icon="lock" 
           name="password" 
@@ -38,7 +44,7 @@
       <v-spacer/>
       <v-btn
         :loading="isSubmitting"
-        :disabled="isSubmitting || !valid"
+        :disabled="isSubmitting || !isValid"
         color="primary" 
         @click="loginUser">Login</v-btn>
     </v-card-actions>
@@ -46,28 +52,34 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'Login',
   layout: 'authenticate',
   data: () => ({
-    valid: false,
+    alert: false,
     isSubmitting: false,
     error: false,
     errorMessage: '',
     email: '',
-    emailRules: [
-      v => !!v || 'E-mail is required',
-      v => /.+@.+/.test(v) || 'E-mail must be valid',
-    ],
     password: '',
-    passwordRules: [v => !!v || 'Password is required'],
   }),
+  computed: {
+    ...mapGetters('auth', ['authError']),
+    isValid() {
+      return !!this.email && !!this.password && this.errors.count() === 0;
+    },
+  },
+  watch: {
+    authError(error) {
+      if (error) this.alert = true;
+    },
+  },
   methods: {
     ...mapActions('auth', ['login']),
     async loginUser() {
-      if (this.valid) {
+      if (this.isValid) {
         try {
           // Set submitting to true, try to dispatch login
           this.isSubmitting = true;
@@ -79,11 +91,8 @@ export default {
 
           this.$router.push('/home');
         } catch (e) {
-          this.errorMessage = e.message;
+          this.isSubmitting = false;
         }
-
-        // Regardless of outcome, set submitting to false
-        this.isSubmitting = false;
       }
     },
   },

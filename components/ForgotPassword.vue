@@ -16,18 +16,18 @@
         Nice job! An email has been sent your way with your new password.
       </v-alert>      
       <v-alert
+        v-if="authError"
         v-model="alertError"
         type="error"
         dismissible
       >
         There was an error when trying to resend the password. Are you sure you used the right email? 😅
       </v-alert>      
-      <v-form 
-        v-model="valid" 
-        @submit.prevent>
+      <v-form @submit.prevent>
         <v-text-field
+          v-validate="'required|email'"
           v-model="email"
-          :rules="emailRules" 
+          :error-messages="errors.collect('email')"
           :disabled="isSubmitting"
           prepend-icon="mail" 
           name="email" 
@@ -43,7 +43,7 @@
       <v-spacer/>
       <v-btn 
         :loading="isSubmitting"
-        :disabled="isSubmitting || !valid"
+        :disabled="isSubmitting || !isValid"
         color="primary" 
         @click="forgotPassword">Reset Password</v-btn>
     </v-card-actions>
@@ -51,23 +51,26 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'Login',
   layout: 'authenticate',
   data: () => ({
     alertSuccess: false,
     alertError: false,
-    valid: false,
     isSubmitting: false,
     email: '',
-    emailRules: [
-      v => !!v || 'E-mail is required',
-      v => /.+@.+/.test(v) || 'E-mail must be valid',
-    ],
   }),
+  computed: {
+    ...mapGetters('auth', ['authError']),
+    isValid() {
+      return !!this.email && this.errors.count() === 0;
+    },
+  },
   methods: {
     forgotPassword() {
-      if (this.valid) {
+      if (this.isValid) {
         // TODO: build authentication layer
 
         // Simulate async call
