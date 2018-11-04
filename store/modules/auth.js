@@ -9,10 +9,12 @@ const auth = {
   state: () => ({
     user: null,
     error: '',
+    success: '',
   }),
   getters: {
     authUser: state => state.user,
     authError: state => state.error,
+    authSuccess: state => state.success,
   },
   mutations: {
     SET_USER(state) {
@@ -34,12 +36,13 @@ const auth = {
         commit(TYPES.SET_USER_SUCCESS, req.session.authUser);
       }
     },
-    async register({ commit }, { email, password }) {
+    async register({ commit }, { email, password, confirmPassword }) {
       commit(TYPES.SET_USER);
       try {
         const data = await this.$axios.$post('/register', {
           email,
           password,
+          confirmPassword,
         });
         commit(TYPES.SET_USER_SUCCESS, data);
       } catch (error) {

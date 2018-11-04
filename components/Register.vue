@@ -29,10 +29,13 @@
         />
         <v-text-field
           v-validate="'required|min:8'"
+          ref="password"
           v-model="password"
           :error-messages="errors.collect('password')"
           :disabled="isSubmitting"
           prepend-icon="lock" 
+          data-vv-name="password"
+          data-vv-delay="100"
           name="password" 
           label="Password" 
           type="password"
@@ -45,6 +48,8 @@
           :error-messages="errors.collect('confirm password')"
           :disabled="isSubmitting"
           prepend-icon="lock" 
+          data-vv-name="confirm password"
+          data-vv-delay="100"
           name="confirm password" 
           label="Confirm Password" 
           type="password"
@@ -104,6 +109,8 @@ export default {
 
           await this.register({
             email: this.email,
+            password: this.password,
+            confirmPassword: this.confirmPassword,
           });
 
           this.$router.push('/home');
