@@ -13,10 +13,9 @@
         type="success"
         dismissible
       >
-        Nice job! An email has been sent your way with your new password.
+        {{ forgotSuccess }}
       </v-alert>      
       <v-alert
-        v-if="authError"
         v-model="alertError"
         type="error"
         dismissible
@@ -28,13 +27,13 @@
           v-validate="'required|email'"
           v-model="email"
           :error-messages="errors.collect('email')"
-          :disabled="isSubmitting"
+          :disabled="forgotLoading"
           prepend-icon="mail" 
           name="email" 
           label="Email" 
           type="email"
           required
-          @keyup.enter="forgotPassword"
+          @keyup.enter="forgot"
         />
       </v-form>
     </v-card-text>
@@ -42,16 +41,16 @@
       <slot/>
       <v-spacer/>
       <v-btn 
-        :loading="isSubmitting"
-        :disabled="isSubmitting || !isValid"
+        :loading="forgotLoading"
+        :disabled="forgotLoading || !isValid"
         color="primary" 
-        @click="forgotPassword">Reset Password</v-btn>
+        @click="forgot">Reset Password</v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'Login',
@@ -59,27 +58,27 @@ export default {
   data: () => ({
     alertSuccess: false,
     alertError: false,
-    isSubmitting: false,
     email: '',
   }),
   computed: {
-    ...mapGetters('auth', ['authError']),
+    ...mapGetters('auth', ['forgotError', 'forgotSuccess', 'forgotLoading']),
     isValid() {
       return !!this.email && this.errors.count() === 0;
     },
   },
+  watch: {
+    forgotError(error) {
+      if (error) this.alertError = true;
+    },
+    forgotSuccess(success) {
+      if (success) this.alertSuccess = true;
+    },
+  },
   methods: {
-    forgotPassword() {
+    ...mapActions('auth', ['forgotPassword']),
+    forgot() {
       if (this.isValid) {
-        // TODO: build authentication layer
-
-        // Simulate async call
-        this.isSubmitting = true;
-
-        setTimeout(() => {
-          this.isSubmitting = false;
-          this.alertSuccess = true;
-        }, 1000);
+        this.forgotPassword(this.email);
       }
     },
   },

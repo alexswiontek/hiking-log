@@ -17,7 +17,7 @@
           v-validate="'required|email'"
           v-model="email"
           :error-messages="errors.collect('email')"
-          :disabled="isSubmitting"
+          :disabled="authLoading"
           prepend-icon="mail" 
           name="email" 
           label="Email" 
@@ -29,7 +29,7 @@
           v-validate="'required|min:8'"
           v-model="password"
           :error-messages="errors.collect('password')"
-          :disabled="isSubmitting"
+          :disabled="authLoading"
           prepend-icon="lock" 
           name="password" 
           label="Password" 
@@ -43,8 +43,8 @@
       <slot/>
       <v-spacer/>
       <v-btn
-        :loading="isSubmitting"
-        :disabled="isSubmitting || !isValid"
+        :loading="authLoading"
+        :disabled="authLoading || !isValid"
         color="primary" 
         @click="loginUser">Login</v-btn>
     </v-card-actions>
@@ -59,14 +59,11 @@ export default {
   layout: 'authenticate',
   data: () => ({
     alert: false,
-    isSubmitting: false,
-    error: false,
-    errorMessage: '',
     email: '',
     password: '',
   }),
   computed: {
-    ...mapGetters('auth', ['authError']),
+    ...mapGetters('auth', ['authError', 'authLoading', 'authSuccess']),
     isValid() {
       return !!this.email && !!this.password && this.errors.count() === 0;
     },
@@ -75,29 +72,20 @@ export default {
     authError(error) {
       if (error) this.alert = true;
     },
+    authSuccess(success) {
+      if (success) this.$router.push('/home');
+    },
   },
   methods: {
     ...mapActions('auth', ['login']),
-    async loginUser() {
+    loginUser() {
       if (this.isValid) {
-        try {
-          // Set submitting to true, try to dispatch login
-          this.isSubmitting = true;
-
-          await this.login({
-            email: this.email,
-            password: this.password,
-          });
-
-          this.$router.push('/home');
-        } catch (e) {
-          this.isSubmitting = false;
-        }
+        this.login({
+          email: this.email,
+          password: this.password,
+        });
       }
     },
   },
 };
 </script>
-
-<style scoped>
-</style>
