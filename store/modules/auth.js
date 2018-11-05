@@ -4,12 +4,14 @@ const TYPES = {
   SET_USER_SUCCESS: 'SET_USER_SUCCESS',
   FORGOT_USER_SUCCESS: 'FORGOT_USER_SUCCESS',
   RESET_PASSWORD_SUCCESS: 'RESET_PASSWORD_SUCCESS',
+  UPDATE_USER_SUCCESS: 'UPDATE_USER_SUCCESS',
 };
 
 const authTypes = {
   user: 'user',
   forgot: 'forgot',
   reset: 'reset',
+  update: 'update',
 };
 
 const determineMessage = statusCode => {
@@ -42,10 +44,15 @@ const auth = {
       loading: false,
       success: '',
     },
+    update: {
+      error: '',
+      loading: false,
+      success: '',
+    },
   }),
   getters: {
     authLoading: state => state.user.loading,
-    authUser: state => state.user.data.email,
+    authUser: state => state.user.data,
     authError: state => state.user.error,
     authSuccess: state => state.user.success,
     forgotLoading: state => state.forgot.loading,

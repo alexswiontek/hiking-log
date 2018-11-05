@@ -41,6 +41,7 @@ module.exports = {
   plugins: [
     '@/plugins/vuetify',
     { src: '~plugins/vee-validate.js', ssr: true },
+    { src: '~/plugins/localStorage.js', ssr: false },
   ],
 
   /*

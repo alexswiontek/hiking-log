@@ -4,9 +4,9 @@
       xs12 
       sm8 
       md6>
-      <profile
-        :email="email"
-      />
+      <no-ssr>
+        <profile />
+      </no-ssr>
     </v-flex>    
   </v-layout>
 </template>
@@ -15,9 +15,6 @@
 import Profile from '~/components/Profile';
 
 export default {
-  asyncData() {
-    return { email: 'j@j.co' };
-  },
   name: 'ProfileParent',
   components: {
     Profile,
