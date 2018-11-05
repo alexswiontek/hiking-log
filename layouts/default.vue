@@ -1,6 +1,8 @@
 <template>
   <v-app>
-    <toolbar />
+    <no-ssr>
+      <toolbar />
+    </no-ssr>
     <v-content class="background">
       <v-container 
         class="container" 
