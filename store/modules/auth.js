@@ -5,6 +5,7 @@ const TYPES = {
   FORGOT_USER_SUCCESS: 'FORGOT_USER_SUCCESS',
   RESET_PASSWORD_SUCCESS: 'RESET_PASSWORD_SUCCESS',
   UPDATE_USER_SUCCESS: 'UPDATE_USER_SUCCESS',
+  SET_LOADING_TO_FALSE: 'SET_LOADING_TO_FALSE',
 };
 
 const authTypes = {
@@ -90,6 +91,12 @@ const auth = {
       state.reset.loading = false;
       state.reset.success = 'You have successfully reset your password.';
     },
+    SET_LOADING_TO_FALSE(state) {
+      state.user.loading = false;
+      state.forgot.loading = false;
+      state.reset.loading = false;
+      state.update.loading = false;
+    },
   },
   actions: {
     async register({ commit }, { email, password, confirmPassword }) {
@@ -162,6 +169,9 @@ const auth = {
           type: authTypes.reset,
         });
       }
+    },
+    setLoadingToFalse({ commit }) {
+      commit(TYPES.SET_LOADING_TO_FALSE);
     },
   },
 };

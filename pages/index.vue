@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import Register from '~/components/Register';
 import Login from '~/components/Login';
 import ForgotPassword from '~/components/ForgotPassword';
@@ -56,7 +57,11 @@ export default {
         : 'Oops, nevermind. I need to sign up!';
     },
   },
+  mounted() {
+    this.setLoadingToFalse();
+  },
   methods: {
+    ...mapActions('auth', ['setLoadingToFalse']),
     toggle() {
       this.newUser = !this.newUser;
       this.forgotPassword = false;
