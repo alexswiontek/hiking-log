@@ -67,6 +67,12 @@ export default {
     },
   },
   watch: {
+    forgotLoading(loading) {
+      if (loading) {
+        this.alertError = false;
+        this.alertSuccess = false;
+      }
+    },
     forgotError(error) {
       if (error) this.alertError = true;
     },

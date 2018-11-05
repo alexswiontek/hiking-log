@@ -77,6 +77,9 @@ export default {
     },
   },
   watch: {
+    resetLoading(loading) {
+      if (loading) this.alert = false;
+    },
     resetError(error) {
       if (error) this.alert = true;
     },
