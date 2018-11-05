@@ -115,7 +115,7 @@ const auth = {
       commit(TYPES.GENERIC_REQUEST, authTypes.user);
       try {
         await this.$axios.$post('/logout');
-        commit(TYPES.GENERIC_REQUEST, authTypes.user);
+        commit(TYPES.SET_USER_SUCCESS, null);
       } catch (error) {
         commit(TYPES.GENERIC_ERROR, {
           message: error.response.data.message,
