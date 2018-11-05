@@ -69,7 +69,7 @@ export default {
     password: 'password',
   }),
   computed: {
-    ...mapGetters('auth', ['resetError', 'resetLoading']),
+    ...mapGetters('auth', ['resetError', 'resetLoading', 'resetSuccess']),
     isValid() {
       return (
         !!this.password && !!this.confirmPassword && this.errors.count() === 0
