@@ -12,6 +12,17 @@ const authTypes = {
   reset: 'reset',
 };
 
+const determineMessage = statusCode => {
+  switch (statusCode) {
+    case 401:
+    case 404:
+      return 'There was an issue with either your email or password. Do you have a typo? 😅';
+    case 500:
+    default:
+      return 'There was an error reaching the server, please try again later!';
+  }
+};
+
 const auth = {
   namespaced: true,
   state: () => ({
@@ -34,7 +45,7 @@ const auth = {
   }),
   getters: {
     authLoading: state => state.user.loading,
-    authUser: state => state.user.data,
+    authUser: state => state.user.data.email,
     authError: state => state.user.error,
     authSuccess: state => state.user.success,
     forgotLoading: state => state.forgot.loading,
@@ -106,7 +117,7 @@ const auth = {
         commit(TYPES.SET_USER_SUCCESS, data);
       } catch (error) {
         commit(TYPES.GENERIC_ERROR, {
-          message: error.response.data.message,
+          message: determineMessage(error.response.status),
           type: authTypes.user,
         });
       }

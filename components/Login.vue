@@ -69,6 +69,9 @@ export default {
     },
   },
   watch: {
+    authLoading(loading) {
+      if (loading) this.alert = false;
+    },
     authError(error) {
       if (error) this.alert = true;
     },
