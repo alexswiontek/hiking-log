@@ -92,12 +92,6 @@ const auth = {
     },
   },
   actions: {
-    // nuxtServerInit is called by Nuxt.js before server-rendering every page
-    // nuxtServerInit({ commit }, { req }) {
-    //   if (req.session && req.session.authUser) {
-    //     commit(TYPES.SET_USER_SUCCESS, req.session.authUser);
-    //   }
-    // },
     async register({ commit }, { email, password, confirmPassword }) {
       commit(TYPES.GENERIC_REQUEST, authTypes.user);
       try {
