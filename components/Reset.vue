@@ -65,8 +65,8 @@ export default {
   layout: 'authenticate',
   data: () => ({
     alert: false,
-    confirmPassword: 'password',
-    password: 'password',
+    confirmPassword: '',
+    password: '',
   }),
   computed: {
     ...mapGetters('auth', ['resetError', 'resetLoading', 'resetSuccess']),
