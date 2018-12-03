@@ -1,5 +1,6 @@
 import Vuex from 'vuex';
 import auth from './modules/auth';
+import hike from './modules/hike';
 
 const debug = process.env.NODE_ENV !== 'production';
 
@@ -8,6 +9,7 @@ const createStore = () => {
     state: {},
     modules: {
       auth,
+      hike,
     },
     strict: debug,
   });

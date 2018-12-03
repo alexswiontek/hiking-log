@@ -4,7 +4,7 @@ A hiking logger that includes your recent hikes and their difficulty
 
 ## Build Setup
 
-``` bash
+```bash
 # install dependencies
 $ npm install
 
@@ -19,4 +19,11 @@ $ npm start
 $ npm run generate
 ```
 
-This project was built using [Nuxt.js](https://nuxtjs.org).
+## API
+
+The baseURL is set in `nuxt.config.js`, where both dev and production links can be found. The local build will require the `hiking-log-api` repo to be running at the same time as this repo.
+
+```bash
+cd ../hiking-log-api
+npm start
+```

@@ -1,12 +1,13 @@
 <template>
-  <v-card 
-    class="card" 
-    height="100%">
+  <v-card
+    class="card"
+    height="100%"
+  >
     <v-img
       :src="image"
       class="white--text"
       height="200px"
-    />    
+    />
     <v-btn
       fab
       bottom
@@ -16,44 +17,57 @@
       class="below-image"
     >
       <v-icon>edit</v-icon>
-    </v-btn> 
+    </v-btn>
 
     <v-card-title>
+      <v-alert
+        v-model="alert"
+        dismissible
+        type="error"
+      >{{ addHikeError }}</v-alert>
       <v-layout column>
         <v-flex>
           <v-text-field
-            v-model="nameEdit"
-            :disabled="creating"
+            v-validate="'required|alpha_spaces'"
+            v-model="name"
+            :disabled="addHikeLoading"
+            :error-messages="errors.collect('name')"
+            name="name"
             label="Name of Hike"
           />
         </v-flex>
         <v-flex>
           <v-text-field
-            v-model="difficultyEdit"
-            :disabled="creating"
+            v-validate="'required|numeric'"
+            v-model="difficulty"
+            :disabled="addHikeLoading"
+            :error-messages="errors.collect('difficulty')"
+            name="difficulty"
             label="Difficulty"
+            type="number"
           />
         </v-flex>
         <v-flex>
           <v-textarea
-            v-model="noteEdit"
-            :disabled="creating"
+            v-model="note"
+            :disabled="addHikeLoading"
             label="Notes"
             no-resize
           />
         </v-flex>
-      </v-layout>       
-    </v-card-title>   
+      </v-layout>
+    </v-card-title>
 
     <v-card-actions>
       <v-layout class="text-xs-center">
         <v-flex>
           <v-btn
-            :loading="creating"
-            :disabled="creating"
+            :loading="addHikeLoading"
+            :disabled="addHikeLoading"
             flat
-            color="primary" 
-            @click="save">Save</v-btn>
+            color="primary"
+            @click="save"
+          >Save</v-btn>
         </v-flex>
       </v-layout>
     </v-card-actions>
@@ -61,49 +75,46 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
+
 export default {
   name: 'AddCard',
-  props: {
-    name: {
-      type: String,
-      default: '',
-    },
-    id: {
-      type: String,
-      default: '',
-    },
-    image: {
-      type: String,
-      default: require('~/assets/stock.jpeg'),
-    },
-    difficulty: {
-      type: [String, Number],
-      default: null,
-    },
-    note: {
-      type: String,
-      default: '',
+  data: () => ({
+    alert: false,
+    difficulty: '',
+    expand: false,
+    image: require('~/assets/stock.jpeg'),
+    name: '',
+    note: '',
+  }),
+  computed: {
+    ...mapGetters('hike', ['addHikeLoading', 'addHikeSuccess', 'addHikeError']),
+    isValid() {
+      return !!this.name && !!this.difficulty && this.errors.count() === 0;
     },
   },
-  data: () => ({
-    creating: false,
-    difficultyEdit: '',
-    expand: false,
-    idEdit: '',
-    imageEdit: '',
-    nameEdit: '',
-    noteEdit: '',
-  }),
+  watch: {
+    addHikeSuccess(value) {
+      if (value) {
+        this.$router.push('/home');
+      }
+    },
+    addHikeError(error) {
+      if (error) {
+        this.alert = true;
+      }
+    },
+  },
   methods: {
+    ...mapActions('hike', ['addHike']),
     save() {
-      this.creating = true;
-      // TODO: add save functionality here
-
-      // Simulate functionality
-      setTimeout(() => {
-        this.creating = false;
-        this.$router.push('/');
-      }, 1000);
+      if (this.isValid) {
+        this.addHike({
+          name: this.name,
+          difficulty: this.difficulty,
+          note: this.note,
+        });
+      }
     },
   },
 };
