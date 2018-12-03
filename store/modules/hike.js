@@ -41,14 +41,18 @@ const auth = {
     },
   },
   actions: {
-    async addHike({ commit }, hikingData) {
+    async addHike({ commit, getters }, { name, difficulty, note }) {
       commit(TYPES.GENERIC_REQUEST, hikeTypes.addHike);
       try {
-        await this.$axios.$post('/add-hike', hikingData);
+        await this.$axios.$post('/add-hike', {
+          name,
+          difficulty,
+          note,
+        });
         commit(TYPES.ADD_HIKE_SUCCESS);
       } catch (error) {
         commit(TYPES.GENERIC_ERROR, {
-          message: error.response.data.message,
+          message: error.response.data.message.message,
           type: hikeTypes.addHike,
         });
       }

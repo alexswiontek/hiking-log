@@ -63,7 +63,7 @@
         <v-flex>
           <v-btn
             :loading="addHikeLoading"
-            :disabled="addHikeLoading"
+            :disabled="addHikeLoading || !isValid"
             flat
             color="primary"
             @click="save"
