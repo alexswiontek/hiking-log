@@ -30,7 +30,7 @@ export default {
   computed: {
     ...mapGetters('hike', ['hikes', 'hikesLoading']),
   },
-  mounted() {
+  created() {
     this.getHikes();
   },
   methods: {

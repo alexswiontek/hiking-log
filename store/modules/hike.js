@@ -77,7 +77,7 @@ const auth = {
       }
     },
     async getHikes({ commit }) {
-      commit(TYPES.GENERIC_REQUEST, hikeTypes.addHike);
+      commit(TYPES.GENERIC_REQUEST, hikeTypes.hikes);
       try {
         const hikes = await this.$axios.$get('/hikes');
         commit(TYPES.GET_HIKES_SUCCESS, hikes);
