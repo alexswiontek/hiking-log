@@ -9,13 +9,16 @@
       xs12
       sm6
       md4
+      class="mb-4"
     >
       <Card
         :name="card.name"
         :image="card.image"
         :difficulty="card.difficulty"
         :note="card.note"
+        :time="card.time"
         :id="card.id"
+        class="mx-1"
       />
     </v-flex>
   </v-layout>

@@ -1,12 +1,13 @@
 <template>
-  <v-card 
-    class="card" 
-    height="100%">
+  <v-card
+    class="card"
+    height="100%"
+  >
     <v-img
       :src="image"
       class="white--text"
       height="200px"
-    />    
+    />
     <v-btn
       fab
       bottom
@@ -16,22 +17,36 @@
       class="below-image"
     >
       <v-icon>edit</v-icon>
-    </v-btn> 
+    </v-btn>
 
     <v-card-title>
       <v-layout column>
         <v-flex>
           <v-text-field
+            v-validate="'required'"
             v-model="nameEdit"
+            :error-messages="errors.collect('name')"
             :disabled="updating"
+            name="name"
             label="Name"
           />
         </v-flex>
         <v-flex>
           <v-text-field
+            v-validate="'required|numeric'"
             v-model="difficultyEdit"
             :disabled="updating"
+            :error-messages="errors.collect('difficulty')"
             label="Difficulty"
+            name="difficulty"
+            type="number"
+          />
+        </v-flex>
+        <v-flex>
+          <v-text-field
+            v-model="timeEdit"
+            :disabled="updating"
+            label="Time to Complete (hrs)"
           />
         </v-flex>
         <v-flex>
@@ -42,8 +57,8 @@
             no-resize
           />
         </v-flex>
-      </v-layout>       
-    </v-card-title>   
+      </v-layout>
+    </v-card-title>
 
     <v-card-actions>
       <v-layout class="text-xs-center">
@@ -52,8 +67,9 @@
             :loading="updating"
             :disabled="updating"
             flat
-            color="primary" 
-            @click="save">Save</v-btn>
+            color="primary"
+            @click="save"
+          >Save</v-btn>
         </v-flex>
       </v-layout>
     </v-card-actions>
@@ -91,6 +107,7 @@ export default {
     imageEdit: '',
     difficultyEdit: '',
     noteEdit: '',
+    timeEdit: '',
     expand: false,
     updating: false,
   }),
@@ -107,7 +124,7 @@ export default {
       // Simulate functionality
       setTimeout(() => {
         this.updating = false;
-        this.$router.push('/');
+        this.$router.push('/home');
       }, 1000);
     },
   },

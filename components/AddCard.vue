@@ -39,15 +39,28 @@
             @keyup.enter="save"
           />
         </v-flex>
+        <v-flex justify-center>
+          <label class="v-label theme--light">Difficulty (1-10): </label>
+          <span
+            v-if="difficulty"
+            class="difficulty primary--text"
+          >{{ difficulty }}</span>
+          <v-rating
+            v-model="difficulty"
+            :hover="true"
+            length="10"
+            empty-icon="landscape"
+            full-icon="landscape"
+            half-icon="landscape"
+            color="primary"
+            background-color="grey lighten-1"
+          />
+        </v-flex>
         <v-flex>
           <v-text-field
-            v-validate="'required|numeric'"
-            v-model="difficulty"
+            v-model="time"
             :disabled="addHikeLoading"
-            :error-messages="errors.collect('difficulty')"
-            name="difficulty"
-            label="Difficulty"
-            type="number"
+            label="Time to Complete (hrs)"
             @keyup.enter="save"
           />
         </v-flex>
@@ -85,11 +98,12 @@ export default {
   name: 'AddCard',
   data: () => ({
     alert: false,
-    difficulty: '',
+    difficulty: null,
     expand: false,
     image: require('~/assets/stock.jpeg'),
     name: '',
     note: '',
+    time: '',
   }),
   computed: {
     ...mapGetters('hike', ['addHikeLoading', 'addHikeSuccess', 'addHikeError']),
@@ -116,6 +130,7 @@ export default {
         this.addHike({
           name: this.name,
           difficulty: this.difficulty,
+          time: this.time,
           note: this.note,
         });
       }
@@ -133,6 +148,12 @@ export default {
   position: absolute;
   top: 175px;
   right: 0;
+}
+
+.difficulty {
+  font-size: 16px;
+  font-weight: bold;
+  margin-left: 5px;
 }
 </style>
 

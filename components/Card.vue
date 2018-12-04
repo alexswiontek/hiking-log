@@ -1,23 +1,28 @@
 <template>
-  <v-card 
-    class="card" 
-    height="100%">
+  <v-card
+    class="card"
+    height="100%"
+  >
     <v-img
       :src="image"
       class="white--text"
       height="200px"
     >
-      <v-container 
-        fill-height 
-        fluid>
+      <v-container
+        fill-height
+        fluid
+      >
         <v-layout fill-height>
-          <v-flex 
-            xs12 
+          <v-flex
+            xs12
             flexbox
             class="text-xs-center"
           >
             <p class="text-parent">
-              <span class="headline custom-text">
+              <span
+                class="headline custom-text"
+                @click="editCard"
+              >
                 {{ name }}
               </span>
             </p>
@@ -30,7 +35,19 @@
       <v-layout column>
         <v-flex>
           <span class="grey--text mr-2">Difficulty:</span>
-          <span>{{ difficulty }}</span>
+          <span class="font-weight-bold primary--text">{{ difficulty }}</span>
+          <div>
+            <span
+              v-for="n in difficulty"
+              :key="n"
+            >
+              <v-icon class="primary--text">landscape</v-icon>
+            </span>
+          </div>
+        </v-flex>
+        <v-flex v-if="time">
+          <span class="grey--text mr-2">Time to Complete:</span>
+          <span>{{ time }}</span>
         </v-flex>
         <v-flex v-if="note">
           <span class="grey--text mr-2">Notes:</span>
@@ -46,19 +63,21 @@
           <span v-else>{{ note }}</span>
         </v-flex>
       </v-layout>
-    </v-card-title>   
+    </v-card-title>
 
     <v-card-actions>
       <v-layout class="text-xs-center">
         <v-flex>
-          <v-dialog 
-            v-model="dialog" 
-            width="500">
+          <v-dialog
+            v-model="dialog"
+            width="500"
+          >
             <v-btn
               slot="activator"
               :disabled="deleting"
-              flat 
-              color="error">Delete</v-btn>
+              flat
+              color="error"
+            >Delete</v-btn>
 
             <v-card>
               <v-card-title
@@ -70,12 +89,13 @@
 
               <v-card-text class="text-xs-center">
                 <h2>{{ name }}</h2>
-                <img 
-                  :src="image" 
-                  height="200px" >
+                <img
+                  :src="image"
+                  height="200px"
+                >
               </v-card-text>
 
-              <v-divider/>
+              <v-divider />
 
               <v-card-actions>
                 <v-spacer />
@@ -95,18 +115,19 @@
                   Cancel
                 </v-btn>
                 <v-spacer />
-              </v-card-actions>              
+              </v-card-actions>
             </v-card>
           </v-dialog>
         </v-flex>
         <v-flex>
           <v-btn
-            flat 
-            color="primary" 
-            @click="editCard">Edit</v-btn>
+            flat
+            color="primary"
+            @click="editCard"
+          >Edit</v-btn>
         </v-flex>
       </v-layout>
-    </v-card-actions>     
+    </v-card-actions>
   </v-card>
 </template>
 
@@ -133,6 +154,10 @@ export default {
       default: 1,
     },
     note: {
+      type: String,
+      default: '',
+    },
+    time: {
       type: String,
       default: '',
     },
@@ -167,7 +192,7 @@ export default {
       setTimeout(() => {
         this.dialog = false;
         this.deleting = false;
-        this.$router.push('/');
+        this.$router.push('/home');
       }, 1000);
     },
     toggleExpand() {
@@ -185,7 +210,7 @@ export default {
   padding: 5px;
   font-style: italic;
   line-height: 1.7 !important;
-  cursor: default;
+  cursor: pointer;
 }
 
 .custom-text::before {
