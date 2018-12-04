@@ -1,12 +1,11 @@
 <template>
   <v-app>
-    <no-ssr>
-      <toolbar />
-    </no-ssr>
+    <toolbar />
     <v-content class="background">
-      <v-container 
-        class="container" 
-        grid-list-md>
+      <v-container
+        class="container"
+        grid-list-md
+      >
         <nuxt />
       </v-container>
     </v-content>

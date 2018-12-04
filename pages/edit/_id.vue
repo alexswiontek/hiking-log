@@ -1,19 +1,18 @@
 <template>
   <v-layout justify-center>
-    <v-flex 
-      xs12 
-      sm8 
-      md6>
-      <no-ssr>
-        <edit-card
-          :name="name"
-          :image="image"
-          :difficulty="difficulty"
-          :time="time"
-          :id="id"
-          :note="note"
-        />
-      </no-ssr>
+    <v-flex
+      xs12
+      sm8
+      md6
+    >
+      <edit-card
+        :name="name"
+        :image="image"
+        :difficulty="difficulty"
+        :time="time"
+        :id="id"
+        :note="note"
+      />
     </v-flex>
   </v-layout>
 </template>

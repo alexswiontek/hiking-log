@@ -20,20 +20,23 @@
     </v-btn>
 
     <v-card-title>
-      <v-alert
-        v-model="alert"
-        dismissible
-        type="error"
-      >{{ addHikeError }}</v-alert>
       <v-layout column>
         <v-flex>
+          <v-alert
+            v-model="alert"
+            dismissible
+            type="error"
+          >{{ addHikeError }}</v-alert>
+        </v-flex>
+        <v-flex>
           <v-text-field
-            v-validate="'required|alpha_spaces'"
+            v-validate="'required'"
             v-model="name"
             :disabled="addHikeLoading"
             :error-messages="errors.collect('name')"
             name="name"
             label="Name of Hike"
+            @keyup.enter="save"
           />
         </v-flex>
         <v-flex>
@@ -45,6 +48,7 @@
             name="difficulty"
             label="Difficulty"
             type="number"
+            @keyup.enter="save"
           />
         </v-flex>
         <v-flex>
