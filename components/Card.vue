@@ -34,7 +34,7 @@
     <v-card-title>
       <v-layout column>
         <v-flex>
-          <span class="grey--text mr-2">Difficulty:</span>
+          <span class="grey--text mr-2">Difficulty (1-10):</span>
           <span class="font-weight-bold primary--text">{{ difficulty }}</span>
           <div>
             <span
@@ -46,8 +46,16 @@
           </div>
         </v-flex>
         <v-flex v-if="time">
-          <span class="grey--text mr-2">Time to Complete:</span>
-          <span>{{ time }}</span>
+          <span class="grey--text mr-2">Time to Complete (hrs):</span>
+          <span class="font-weight-bold primary--text">{{ time }}</span>
+          <div>
+            <span
+              v-for="n in time"
+              :key="n"
+            >
+              <v-icon class="primary--text">timelapse</v-icon>
+            </span>
+          </div>
         </v-flex>
         <v-flex v-if="note">
           <span class="grey--text mr-2">Notes:</span>
@@ -158,8 +166,8 @@ export default {
       default: '',
     },
     time: {
-      type: String,
-      default: '',
+      type: Number,
+      default: 1,
     },
   },
   data: () => ({

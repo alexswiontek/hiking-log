@@ -43,25 +43,34 @@
           <label class="v-label theme--light">Difficulty (1-10): </label>
           <span
             v-if="difficulty"
-            class="difficulty primary--text"
+            class="label primary--text"
           >{{ difficulty }}</span>
           <v-rating
             v-model="difficulty"
-            :hover="true"
+            :disabled="addHikeLoading"
+            hover
             length="10"
             empty-icon="landscape"
             full-icon="landscape"
-            half-icon="landscape"
             color="primary"
             background-color="grey lighten-1"
           />
         </v-flex>
         <v-flex>
-          <v-text-field
+          <label class="v-label theme--light">Time to Complete (hrs): </label>
+          <span
+            v-if="time"
+            class="label primary--text"
+          >{{ time }}</span>
+          <v-rating
             v-model="time"
             :disabled="addHikeLoading"
-            label="Time to Complete (hrs)"
-            @keyup.enter="save"
+            hover
+            length="5"
+            empty-icon="timelapse"
+            full-icon="timelapse"
+            color="primary"
+            background-color="grey lighten-1"
           />
         </v-flex>
         <v-flex>
@@ -103,7 +112,7 @@ export default {
     image: require('~/assets/stock.jpeg'),
     name: '',
     note: '',
-    time: '',
+    time: null,
   }),
   computed: {
     ...mapGetters('hike', ['addHikeLoading', 'addHikeSuccess', 'addHikeError']),
@@ -150,7 +159,7 @@ export default {
   right: 0;
 }
 
-.difficulty {
+.label {
   font-size: 16px;
   font-weight: bold;
   margin-left: 5px;
