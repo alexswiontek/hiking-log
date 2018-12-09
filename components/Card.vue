@@ -82,7 +82,7 @@
           >
             <v-btn
               slot="activator"
-              :disabled="deleting"
+              :disabled="deleteHikeLoading"
               flat
               color="error"
             >Delete</v-btn>
@@ -108,9 +108,10 @@
               <v-card-actions>
                 <v-spacer />
                 <v-btn
-                  :disabled="deleting"
+                  :disabled="deleteHikeLoading"
+                  :loading="deleteHikeLoading"
                   color="error"
-                  @click="deleteHike"
+                  @click="deleteHikePage"
                 >
                   Delete
                 </v-btn>
@@ -140,6 +141,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 const MAX_NOTE_LENGTH = 100;
 
 export default {
@@ -171,11 +173,16 @@ export default {
     },
   },
   data: () => ({
+    alert: false,
     dialog: false,
-    deleting: false,
     expand: false,
   }),
   computed: {
+    ...mapGetters('hike', [
+      'deleteHikeLoading',
+      'deleteHikeSuccess',
+      'deleteHikeError',
+    ]),
     icon() {
       return this.expand ? 'expand_less' : 'expand_more';
     },
@@ -189,19 +196,25 @@ export default {
       return this.expand ? this.note : this.shortenedNote;
     },
   },
+  watch: {
+    deleteHikeSuccess(success) {
+      if (success) {
+        this.dialog = false;
+      }
+    },
+    deleteHikeError(error) {
+      if (error) {
+        this.dialog = false;
+      }
+    },
+  },
   methods: {
+    ...mapActions('hike', ['deleteHike', 'getHikes']),
     editCard() {
       this.$router.push(`/edit/${this.id}`);
     },
-    deleteHike() {
-      this.deleting = true;
-
-      // Imitate API call
-      setTimeout(() => {
-        this.dialog = false;
-        this.deleting = false;
-        this.$router.push('/home');
-      }, 1000);
+    deleteHikePage() {
+      this.deleteHike(this.id);
     },
     toggleExpand() {
       this.expand = !this.expand;

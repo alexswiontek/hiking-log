@@ -5,6 +5,7 @@ const TYPES = {
   GET_HIKES_SUCCESS: 'GET_HIKES_SUCCESS',
   GET_HIKE_SUCCESS: 'GET_HIKE_SUCCESS',
   UPDATE_HIKE_SUCCESS: 'UPDATE_HIKE_SUCCESS',
+  DELETE_HIKE_SUCCESS: 'DELETE_HIKE_SUCCESS',
 };
 
 const hikeTypes = {
@@ -172,8 +173,8 @@ const auth = {
     async deleteHike({ commit }, id) {
       commit(TYPES.GENERIC_REQUEST, hikeTypes.deleteHike);
       try {
-        const hikes = await this.$axios.$delete(`/hike/${id}`);
-        commit(TYPES.GET_HIKE_SUCCESS, hikes);
+        const deletedHike = await this.$axios.$delete(`/hike/${id}`);
+        commit(TYPES.DELETE_HIKE_SUCCESS, deletedHike);
       } catch (error) {
         commit(TYPES.GENERIC_ERROR, {
           message: error.response.data.message,
