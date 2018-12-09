@@ -39,7 +39,7 @@
             @keyup.enter="save"
           />
         </v-flex>
-        <v-flex justify-center>
+        <v-flex>
           <label class="v-label theme--light">Difficulty (1-10): </label>
           <span
             v-if="difficulty"
@@ -117,7 +117,12 @@ export default {
   computed: {
     ...mapGetters('hike', ['addHikeLoading', 'addHikeSuccess', 'addHikeError']),
     isValid() {
-      return !!this.name && !!this.difficulty && this.errors.count() === 0;
+      return (
+        !!this.name &&
+        !!this.difficulty &&
+        this.time &&
+        this.errors.count() === 0
+      );
     },
   },
   watch: {

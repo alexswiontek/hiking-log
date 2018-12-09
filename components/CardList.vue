@@ -17,7 +17,7 @@
         :difficulty="card.difficulty"
         :note="card.note"
         :time="card.time"
-        :id="card.id"
+        :id="card._id"
         class="mx-1"
       />
     </v-flex>

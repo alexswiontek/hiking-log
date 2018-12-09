@@ -5,14 +5,7 @@
       sm8
       md6
     >
-      <edit-card
-        :name="name"
-        :image="image"
-        :difficulty="difficulty"
-        :time="time"
-        :id="id"
-        :note="note"
-      />
+      <edit-card />
     </v-flex>
   </v-layout>
 </template>
@@ -25,17 +18,5 @@ export default {
   components: {
     EditCard,
   },
-  data: () => ({
-    name: 'Camelback Mountain',
-    image:
-      'https://hikingguy.com/wp-content/uploads/camelback-mountain-hike-trail-3-740x416.jpg',
-    difficulty: 8,
-    time: '2 hours',
-    id: '3',
-    note: 'It is easier going up than down!',
-  }),
 };
 </script>
-
-<style scoped>
-</style>
