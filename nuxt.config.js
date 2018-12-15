@@ -40,7 +40,7 @@ module.exports = {
   */
   plugins: [
     '@/plugins/vuetify',
-    { src: '~plugins/vee-validate.js', ssr: true },
+    { src: '~plugins/vee-validate.js', ssr: false },
     { src: '~/plugins/localStorage.js', ssr: false },
   ],
 
@@ -57,7 +57,7 @@ module.exports = {
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
     baseURL: isProduction
-      ? 'https://hiking-log-api.glitch.me'
+      ? 'https://hiking-log-api-zbgbndegng.now.sh/'
       : 'http://localhost:7777',
   },
 
