@@ -4,21 +4,7 @@
     class="card"
     height="100%"
   >
-    <v-img
-      :src="image"
-      class="white--text"
-      height="200px"
-    />
-    <v-btn
-      fab
-      bottom
-      right
-      small
-      color="primary"
-      class="below-image"
-    >
-      <v-icon>edit</v-icon>
-    </v-btn>
+    <image-upload :image-url.sync="image" />
 
     <v-card-title>
       <v-layout column>
@@ -106,9 +92,13 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import ImageUpload from '~/components/ImageUpload';
 
 export default {
   name: 'EditCard',
+  components: {
+    ImageUpload,
+  },
   data: () => ({
     alert: false,
     difficulty: null,
@@ -136,19 +126,20 @@ export default {
       return (
         !!this.name &&
         !!this.difficulty &&
-        this.time &&
+        !!this.time &&
         this.errors.count() === 0
       );
     },
   },
   watch: {
     getHikeSuccess() {
-      const { name, difficulty, time, note } = this.getHikeData;
+      const { name, difficulty, time, note, image } = this.getHikeData;
 
       this.name = name;
       this.difficulty = difficulty;
       this.time = time;
       this.note = note;
+      this.image = image;
     },
     updateHikeSuccess() {
       setTimeout(() => {
@@ -179,6 +170,7 @@ export default {
           difficulty: this.difficulty,
           time: this.time,
           note: this.note,
+          image: this.image,
         });
       }
     },
@@ -189,12 +181,6 @@ export default {
 <style scoped>
 .card {
   box-shadow: 4px 4px 9px var(--v-accent-darken2);
-}
-
-.below-image {
-  position: absolute;
-  top: 175px;
-  right: 0;
 }
 </style>
 

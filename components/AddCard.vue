@@ -111,7 +111,7 @@ export default {
       return (
         !!this.name &&
         !!this.difficulty &&
-        this.time &&
+        !!this.time &&
         this.errors.count() === 0
       );
     },

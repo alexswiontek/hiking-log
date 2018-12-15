@@ -154,7 +154,10 @@ const auth = {
         });
       }
     },
-    async updateHike({ commit }, { id, name, difficulty, time, note = '' }) {
+    async updateHike(
+      { commit },
+      { id, name, difficulty, time, note = '', image }
+    ) {
       commit(TYPES.GENERIC_REQUEST, hikeTypes.updateHike);
       try {
         const updatedHike = await this.$axios.$put(`/hike/${id}`, {
@@ -162,6 +165,7 @@ const auth = {
           difficulty,
           time,
           note,
+          image,
         });
         commit(TYPES.UPDATE_HIKE_SUCCESS, updatedHike);
       } catch (error) {
