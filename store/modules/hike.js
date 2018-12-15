@@ -112,7 +112,7 @@ const auth = {
     },
   },
   actions: {
-    async addHike({ commit }, { name, difficulty, time, note }) {
+    async addHike({ commit }, { name, difficulty, time, note, image }) {
       commit(TYPES.GENERIC_REQUEST, hikeTypes.addHike);
       try {
         await this.$axios.$post('/add-hike', {
@@ -120,6 +120,7 @@ const auth = {
           difficulty,
           time,
           note,
+          image,
         });
         commit(TYPES.ADD_HIKE_SUCCESS);
       } catch (error) {

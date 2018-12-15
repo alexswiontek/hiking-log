@@ -3,21 +3,7 @@
     class="card"
     height="100%"
   >
-    <v-img
-      :src="image"
-      class="white--text"
-      height="200px"
-    />
-    <v-btn
-      fab
-      bottom
-      right
-      small
-      color="primary"
-      class="below-image"
-    >
-      <v-icon>edit</v-icon>
-    </v-btn>
+    <image-upload :image-url.sync="image" />
 
     <v-card-title>
       <v-layout column>
@@ -102,14 +88,19 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import ImageUpload from '~/components/ImageUpload';
 
 export default {
   name: 'AddCard',
+  components: {
+    ImageUpload,
+  },
   data: () => ({
     alert: false,
     difficulty: null,
     expand: false,
-    image: require('~/assets/stock.jpeg'),
+    image:
+      'https://res.cloudinary.com/alexswan/image/upload/v1544906603/stock.jpg',
     name: '',
     note: '',
     time: null,
@@ -146,6 +137,7 @@ export default {
           difficulty: this.difficulty,
           time: this.time,
           note: this.note,
+          image: this.image,
         });
       }
     },
@@ -156,12 +148,6 @@ export default {
 <style scoped>
 .card {
   box-shadow: 4px 4px 9px var(--v-accent-darken2);
-}
-
-.below-image {
-  position: absolute;
-  top: 175px;
-  right: 0;
 }
 
 .label {

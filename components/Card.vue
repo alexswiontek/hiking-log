@@ -157,7 +157,8 @@ export default {
     },
     image: {
       type: String,
-      default: require('~/assets/stock.jpeg'),
+      default:
+        'https://res.cloudinary.com/alexswan/image/upload/v1544906603/stock.jpg',
     },
     difficulty: {
       type: [String, Number],

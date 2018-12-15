@@ -113,7 +113,8 @@ export default {
     alert: false,
     difficulty: null,
     expand: false,
-    image: require('~/assets/stock.jpeg'),
+    image:
+      'https://res.cloudinary.com/alexswan/image/upload/v1544906603/stock.jpg',
     name: '',
     note: '',
     time: null,
