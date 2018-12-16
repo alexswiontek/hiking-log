@@ -57,7 +57,7 @@ module.exports = {
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
     baseURL: isProduction
-      ? 'https://hiking-log-api-zbgbndegng.now.sh/'
+      ? 'https://hiking-log-api.glitch.me/'
       : 'http://localhost:7777',
     credentials: true,
   },
