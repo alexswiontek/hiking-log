@@ -39,7 +39,7 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '@/plugins/vuetify',
+    { src: '~/plugins/vuetify', ssr: false },
     { src: '~plugins/vee-validate.js', ssr: false },
     { src: '~/plugins/localStorage.js', ssr: false },
   ],
@@ -59,6 +59,7 @@ module.exports = {
     baseURL: isProduction
       ? 'https://hiking-log-api-zbgbndegng.now.sh/'
       : 'http://localhost:7777',
+    credentials: true,
   },
 
   /*
