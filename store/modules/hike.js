@@ -130,10 +130,10 @@ const auth = {
         });
       }
     },
-    async getHikes({ commit }) {
+    async getHikes({ commit }, params = {}) {
       commit(TYPES.GENERIC_REQUEST, hikeTypes.hikes);
       try {
-        const hikes = await this.$axios.$get('/hikes');
+        const hikes = await this.$axios.$get('/hikes', { params });
         commit(TYPES.GET_HIKES_SUCCESS, hikes);
       } catch (error) {
         commit(TYPES.GENERIC_ERROR, {

@@ -10,6 +10,21 @@
       dismissible
       type="success"
     >{{ deleteHikeSuccess }}</v-alert>
+    <v-layout>
+      <v-flex
+        xs12
+        offset-sm8
+        sm4
+      >
+        <v-select
+          v-model="sort"
+          :items="items"
+          label="Sort the hikes"
+          item-text="text"
+          item-value="sort"
+        />
+      </v-flex>
+    </v-layout>
     <card-list
       v-if="hikesLoading || hikes.length > 0"
       :loading="hikesLoading"
@@ -41,7 +56,16 @@ export default {
   },
   data: () => ({
     alert: false,
+    items: [
+      { text: '🆕 New (default)', sort: { created: 'desc' } },
+      { text: '📆 Old', sort: { created: 'asc' } },
+      { text: '🏖️ Easy', sort: { difficulty: 'asc' } },
+      { text: '☠️ Hard', sort: { difficulty: 'desc' } },
+      { text: '🚶 Short', sort: { time: 'asc' } },
+      { text: '⛺ Long', sort: { time: 'desc' } },
+    ],
     success: false,
+    sort: {},
   }),
   computed: {
     ...mapGetters('hike', [
@@ -63,6 +87,11 @@ export default {
     deleteHikeError(error) {
       if (error) {
         this.alert = true;
+      }
+    },
+    sort(value) {
+      if (value) {
+        this.getHikes(value);
       }
     },
   },
