@@ -10,11 +10,26 @@
       dismissible
       type="success"
     >{{ deleteHikeSuccess }}</v-alert>
-    <v-layout>
+    <v-layout
+      wrap
+      justify-space-between
+    >
       <v-flex
         xs12
-        offset-sm8
-        sm4
+        sm5
+        md4
+      >
+        <v-text-field
+          v-model="search"
+          label="Search by Name"
+          clearable
+          prepend-icon="search"
+        />
+      </v-flex>
+      <v-flex
+        xs12
+        sm5
+        md4
       >
         <v-select
           v-model="sort"
@@ -22,13 +37,14 @@
           label="Sort the hikes"
           item-text="text"
           item-value="sort"
+          prepend-icon="sort"
         />
       </v-flex>
     </v-layout>
     <card-list
       v-if="hikesLoading || hikes.length > 0"
       :loading="hikesLoading"
-      :cards="hikes"
+      :cards="filteredHikes"
     />
     <v-layout
       v-else
@@ -64,6 +80,7 @@ export default {
       { text: '🚶 Short', sort: { time: 'asc' } },
       { text: '⛺ Long', sort: { time: 'desc' } },
     ],
+    search: '',
     success: false,
     sort: {},
   }),
@@ -75,6 +92,13 @@ export default {
       'deleteHikeSuccess',
       'deleteHikeError',
     ]),
+    filteredHikes() {
+      if (this.hikes && this.hikes.length > 0) {
+        return this.hikes.filter(hike => hike.name.includes(this.search));
+      }
+
+      return this.hikes;
+    },
   },
   watch: {
     deleteHikeSuccess(success) {
