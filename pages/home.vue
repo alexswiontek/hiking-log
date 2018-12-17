@@ -24,6 +24,8 @@
           label="Search by Name"
           clearable
           prepend-icon="search"
+          outline
+          color="primary"
         />
       </v-flex>
       <v-flex
@@ -38,6 +40,8 @@
           item-text="text"
           item-value="sort"
           prepend-icon="sort"
+          outline
+          color="primary"
         />
       </v-flex>
     </v-layout>
