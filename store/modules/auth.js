@@ -2,6 +2,7 @@ const TYPES = {
   GENERIC_REQUEST: 'GENERIC_REQUEST',
   GENERIC_ERROR: 'GENERIC_ERROR',
   SET_USER_SUCCESS: 'SET_USER_SUCCESS',
+  SET_USER_LOGOUT: 'SET_USER_LOGOUT',
   FORGOT_USER_SUCCESS: 'FORGOT_USER_SUCCESS',
   RESET_PASSWORD_SUCCESS: 'RESET_PASSWORD_SUCCESS',
   UPDATE_USER_SUCCESS: 'UPDATE_USER_SUCCESS',
@@ -34,6 +35,7 @@ const auth = {
       loading: false,
       success: '',
       data: null,
+      isAuthenticated: false,
     },
     forgot: {
       error: '',
@@ -79,6 +81,14 @@ const auth = {
       state.user.error = '';
       state.user.loading = false;
       state.user.success = 'You have successfully loaded the user.';
+      state.user.isAuthenticated = true;
+    },
+    SET_USER_LOGOUT(state) {
+      state.user.data = {};
+      state.user.error = '';
+      state.user.loading = false;
+      state.user.success = 'You have successfully logged out.';
+      state.user.isAuthenticated = false;
     },
     FORGOT_USER_SUCCESS(state) {
       state.forgot.error = '';
@@ -134,7 +144,7 @@ const auth = {
       commit(TYPES.GENERIC_REQUEST, authTypes.user);
       try {
         await this.$axios.$post('/logout');
-        commit(TYPES.SET_USER_SUCCESS, null);
+        commit(TYPES.SET_USER_LOGOUT);
       } catch (error) {
         commit(TYPES.GENERIC_ERROR, {
           message: error.response.data.message,
