@@ -145,6 +145,7 @@ const auth = {
       try {
         await this.$axios.$post('/logout');
         commit(TYPES.SET_USER_LOGOUT);
+        localStorage.clear();
       } catch (error) {
         commit(TYPES.GENERIC_ERROR, {
           message: error.response.data.message,
