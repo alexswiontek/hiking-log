@@ -98,7 +98,14 @@ export default {
     ]),
     filteredHikes() {
       if (this.hikes && this.hikes.length > 0) {
-        return this.hikes.filter(hike => hike.name.includes(this.search));
+        return this.search
+          ? this.hikes.filter(hike => {
+              const targetHike = hike.name.toLowerCase();
+              const currentSearch = this.search.toLowerCase();
+
+              return targetHike.includes(currentSearch);
+            })
+          : this.hikes;
       }
 
       return this.hikes;
