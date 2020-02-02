@@ -2,6 +2,27 @@
 
 A hiking logger that includes your recent hikes and their difficulty
 
+![Home page](https://imgur.com/z0wPaEG.png)
+
+## Demo
+
+![Adding hikes](https://imgur.com/y3EYnle.gif)
+
+You can add a new hike and provide some detail about it
+
+![Deleting hikes](https://i.imgur.com/sRmm9Tf.gif)
+
+You can remove unwanted hikes
+
+![Sorting hikes](https://i.imgur.com/qaIaU7E.gif)
+
+You can sort them by difficulty, time, and other categories
+
+![Filtering hikes](https://imgur.com/BESwK0R.gif)
+
+You can quickly filter between them
+
+
 ## Build Setup
 
 ```bash
