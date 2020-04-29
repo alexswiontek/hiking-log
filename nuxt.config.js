@@ -87,9 +87,10 @@ module.exports = {
   proxy: {
     // Docs: https://nuxtjs.org/faq/http-proxy/
     '/api': {
-      target: isProduction
-        ? 'https://hiking-log-api.glitch.me/'
-        : 'http://localhost:7777',
+      target: 'https://hiking-log-api.glitch.me/',
+      // target: isProduction
+      //   ? 'https://hiking-log-api.glitch.me/'
+      //   : 'http://localhost:7777',
       pathRewrite: {
         '^/api': '/api',
       },
