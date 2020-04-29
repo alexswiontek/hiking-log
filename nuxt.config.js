@@ -88,15 +88,14 @@ module.exports = {
     // Docs: https://nuxtjs.org/faq/http-proxy/
     '/api': {
       target: 'https://hiking-log-api.glitch.me/',
-      // target: isProduction
-      //   ? 'https://hiking-log-api.glitch.me/'
-      //   : 'http://localhost:7777',
       pathRewrite: {
         '^/api': '/api',
       },
-      changeOrigin: true,
     },
   },
 
   debug: !isProduction,
+  generate: {
+    fallback: true,
+  },
 };
