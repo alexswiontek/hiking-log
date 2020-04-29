@@ -91,7 +91,7 @@ module.exports = {
         ? 'https://hiking-log-api.glitch.me/'
         : 'http://localhost:7777',
       pathRewrite: {
-        '^/api': '/',
+        '^/api': '/api',
       },
       changeOrigin: true,
     },
