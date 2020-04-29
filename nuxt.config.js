@@ -95,7 +95,4 @@ module.exports = {
   },
 
   debug: !isProduction,
-  generate: {
-    fallback: true,
-  },
 };
