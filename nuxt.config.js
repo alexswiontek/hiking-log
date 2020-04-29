@@ -50,15 +50,14 @@ module.exports = {
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios',
+    '@nuxtjs/proxy',
   ],
   /*
   ** Axios module configuration
   */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
-    baseURL: isProduction
-      ? 'https://hiking-log-api.glitch.me/'
-      : 'http://localhost:7777',
+    baseURL: '/api',
     credentials: true,
   },
 
@@ -79,6 +78,21 @@ module.exports = {
           exclude: /(node_modules)/,
         });
       }
+    },
+  },
+
+  /*
+  ** Proxy configuration
+  */
+  proxy: {
+    // Docs: https://nuxtjs.org/faq/http-proxy/
+    '/api': {
+      target: isProduction
+        ? 'https://hiking-log-api.glitch.me/'
+        : 'http://localhost:7777',
+      pathRewrite: {
+        '^/api': '/',
+      },
     },
   },
 
