@@ -3,7 +3,7 @@ const pkg = require('./package');
 const isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = {
-  mode: 'spa',
+  ssr: false,
 
   /*
   ** Headers of the page
@@ -87,7 +87,9 @@ module.exports = {
   proxy: {
     // Docs: https://nuxtjs.org/faq/http-proxy/
     '/api': {
-      target: 'https://hiking-log-api.glitch.me/',
+      target: isProduction
+        ? 'https://hiking-log-api.glitch.me/'
+        : 'http://localhost:7777',
       pathRewrite: {
         '^/api': '/api',
       },

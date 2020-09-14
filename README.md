@@ -22,7 +22,6 @@ You can sort them by difficulty, time, and other categories
 
 You can quickly filter between them
 
-
 ## Build Setup
 
 ```bash
@@ -43,6 +42,8 @@ $ npm run generate
 ## API
 
 The baseURL is set in `nuxt.config.js`, where both dev and production links can be found. The local build will require the `hiking-log-api` repo to be running at the same time as this repo.
+
+Ideally the target API route should not need to be changed and will be toggled based on NODE_ENV.
 
 ```bash
 cd ../hiking-log-api
